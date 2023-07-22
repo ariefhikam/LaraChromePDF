@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: lara-chrome-pdf
+    volumes:
+      - type: bind
+        source: ./
+        target: /var/www/html
