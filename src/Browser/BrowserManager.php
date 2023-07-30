@@ -1,6 +1,6 @@
 <?php
 
-namespace ariefhikam\LaraChromePdf\Browser;
+namespace Ariefhikam\LaraChromePdf\Browser;
 
 use HeadlessChromium\BrowserFactory;
 
@@ -12,12 +12,36 @@ class BrowserManager {
     public function start()
     {
         try {
-            $browserFactory = new BrowserFactory();
-            $this->browser = $browserFactory->createBrowser();
-            $this->page = $browser->createPage();
-        } finally {
-            $browser->close();
+            $browserFactory = new BrowserFactory(
+                config('chrome-pdf.browser.binnary')
+            );
+
+            $this->browser = $browserFactory->createBrowser([
+                'windowSize' => config('chrome-pdf.browser.size'),
+                'noSandbox' => !config('chrome-pdf.browser.sandbox'),
+                'debugLogger' => 'php://stdout',
+            ]);
+
+            $this->page = $this->browser->createPage();
+        } catch (\Exception $err) {
+            throw($err);
+
+            $this->browser->close();
         }
+
+        return $this;
+    }
+
+    public function screenshot($location)
+    {
+        $this->page
+             ->screenshot()
+             ->saveToFile($location);
+
+
+        dd($location);
+
+         return $location;
     }
 
     public function createPdf($location, $options)
@@ -25,6 +49,8 @@ class BrowserManager {
         $this->page
              ->pdf($options)
              ->saveToFile($location);
+
+        return $location;
     }
 
     public function navigate($location)
@@ -32,6 +58,13 @@ class BrowserManager {
         $this->page
              ->navigate($location)
              ->waitForNavigation();
+
+        return $this;
+    }
+
+    public function stop()
+    {
+        $this->browser->close();
     }
 }
 

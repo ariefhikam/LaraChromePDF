@@ -1,5 +1,36 @@
 {
+    "name": "ariefhikam/lara-chrome-pdf",
+    "description": "Laravel PDF Generate using Headless Chrome",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Arief Hikam",
+            "email": "ariefhikam@gmail.com"
+        }
+    ],
     "require": {
-        "chrome-php/chrome": "*"
+        "chrome-php/chrome": "^v1.9.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5",
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ariefhikam\\LaraChromePdf\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ariefhikam\\LaraChromePdf\\LaraChromePdfProvider"
+            ],
+            "aliases": {
+                "ChromePdf": "Ariefhikam\\LaraChromePdf\\LaraChromePdf"
+            }
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit tests"
     }
 }

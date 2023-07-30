@@ -31,7 +31,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libzip-dev \
     zip
 
-RUN docker-php-ext-install -j$(nproc) zip
+RUN docker-php-ext-install -j$(nproc) zip sockets
 
 RUN curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && echo "deb https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list

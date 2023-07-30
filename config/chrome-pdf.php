@@ -2,16 +2,20 @@
 
 return [
     'browser' => [
-        'windowSize' => [1920, 1000],
+        'binnary' => env('CHROME_BINNARY', '/usr/bin/google-chrome-stable'),
+        'size' => [1920, 1000],
+        'sandbox' => false,
+
         'enableImages' => true,
         'envVariables' => [],
         'headless' => true,
         'ignoreCertificateErrors' => true,
-        'noSandbox' => true,
         'userAgent' => '',
         'customFLags' => [],
     ],
     'pdf' => [
+        'temporary_folder' => sys_get_temp_dir(),
+        /* 'temporary_folder' => __DIR__ . '/../tests/results', */
         'landscape'           => true,
         'printBackground'     => true,
         'displayHeaderFooter' => true,
